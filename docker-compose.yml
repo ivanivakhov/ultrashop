@@ -19,7 +19,7 @@ services:
         environment:
             POSTGRES_PASSWORD: 12345678
             POSTGRES_USER: postgres
-            POSTGRES_DB: laravel
+            POSTGRES_DB: ultrashop
 
 volumes:
     ultrashop:
