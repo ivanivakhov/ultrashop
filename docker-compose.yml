@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+    app:
+        build: ./
+        depends_on:
+            - db
+        ports:
+            - 800:80
+        volumes:
+            - ./:/var/www/html
+    db:
+        image: postgres
+        restart: always
+        ports:
+            - 6543:5432
+        volumes:
+            - ultrashop:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: 12345678
+            POSTGRES_USER: postgres
+            POSTGRES_DB: laravel
+
+volumes:
+    ultrashop:
