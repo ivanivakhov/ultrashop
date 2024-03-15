@@ -5,4 +5,5 @@ Commands
  - `composer require barryvdh/laravel-debugbar --dev` - [debug bar](https://github.com/barryvdh/laravel-debugbar) 
  - `composer require laravel/telescope` - for some more debug
    - `php artisan telescope:install`
- - asdfdf
+ - `npm install`
+ - `npm install -D tailwindcss`
