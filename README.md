@@ -7,3 +7,6 @@ Commands
    - `php artisan telescope:install`
  - `npm install`
  - `npm install -D tailwindcss`
+
+ - `php artisan make:command InstallCommand` - create new command
+ - `php artisan shop:install` - create new command
