@@ -10,6 +10,7 @@ services:
         volumes:
             - ./:/var/www/html
     db:
+        container_name: 'postgres'
         image: postgres
         restart: always
         ports:
@@ -17,9 +18,9 @@ services:
         volumes:
             - ultrashop:/var/lib/postgresql/data
         environment:
-            POSTGRES_PASSWORD: 12345678
-            POSTGRES_USER: postgres
-            POSTGRES_DB: ultrashop
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_DB: ${DB_DATABASE}
 
 volumes:
     ultrashop:
