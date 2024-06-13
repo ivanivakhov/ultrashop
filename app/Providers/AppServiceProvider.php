@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
@@ -28,23 +29,38 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::preventLazyLoading(!app()->isProduction());
-        Model::preventSilentlyDiscardingAttributes(!app()->isProduction()); //Exception when save not fillable
+        Model::shouldBeStrict(!app()->isProduction());
 
-        DB::whenQueryingForLongerThan(500, function (Connection $connection) {
-            logger()
-                ->channel('telegram')
-                ->debug('whenQueryingForLongerThan: ' . $connection->query()->toSql());
-        });
+        if (app()->isProduction()) {
 
-        $kernel = app(Kernel::class);
-        $kernel->whenRequestLifecycleIsLongerThan(
-            CarbonInterval::seconds(5),
-            function() {
+            DB::whenQueryingForLongerThan(500, function (Connection $connection) {
                 logger()
                     ->channel('telegram')
-                    ->debug('whenRequestLifecycleIsLongerThan: ' . request()->url());
-            }
-        );
+                    ->debug('whenQueryingForLongerThan: ' . $connection->query()->toSql());
+            });
+
+            DB::listen(function($query){
+//            dump($query->time);
+//            dump($query->sql);
+//            dump($query->bindings);
+
+                if ($query->time > 100) {
+                    logger()
+                        ->channel('telegram')
+                        ->debug('DB::listen: ' . $query->sql);
+                }
+            });
+
+            $kernel = app(Kernel::class);
+            $kernel->whenRequestLifecycleIsLongerThan(
+                CarbonInterval::seconds(20),
+                function() {
+                    logger()
+                        ->channel('telegram')
+                        ->debug('whenRequestLifecycleIsLongerThan: ' . request()->url());
+                }
+            );
+        }
+
     }
 }
