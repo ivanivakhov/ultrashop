@@ -33,12 +33,6 @@ class AppServiceProvider extends ServiceProvider
 
         if (app()->isProduction()) {
 
-            DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection) {
-                logger()
-                    ->channel('telegram')
-                    ->debug('whenQueryingForLongerThan: ' . $connection->query()->toSql());
-            });
-
             DB::listen(function($query){
 //            dump($query->time);
 //            dump($query->sql);
