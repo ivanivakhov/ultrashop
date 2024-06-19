@@ -28,7 +28,6 @@ class Brand extends Model
 
     public function products(): HasMany
     {
-        // TODO or belongsToMany?
         return $this->hasMany(Product::class);
     }
 }
