@@ -16,6 +16,7 @@ class HomeController extends Controller
             dd($request);
 
         }
-        dd(auth()->check());
+
+        return response()->view('welcome');
     }
 }
