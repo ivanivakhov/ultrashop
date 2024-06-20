@@ -8,12 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasSlug
 {
+    private static array $slugs = [];
+
     protected static function bootHasSlug(): void
     {
         static::creating(function (Model $model) {
-            $model->slug = $model->slug ?? str($model->{self::slugFrom()})
-                ->append(time()) //TODO check if slug exists and iterate suffix
-                ->slug();
+            $slug = str($model->{self::slugFrom()})->slug();
+
+            if (isset(static::$slugs[$slug->value()])) {
+                static::$slugs[$slug->value()]++;
+            } else {
+                static::$slugs[$slug->value()] = 0;
+            }
+
+            $suffix = static::$slugs[$slug->value()] === 0 ? "" : "-".static::$slugs[$slug->value()];
+            $model->slug = $model->slug ?? $slug . $suffix;
         });
     }
 
