@@ -8,6 +8,8 @@ RUN a2enmod rewrite
 RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pgsql
+RUN apt-get install npm -y
+
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -18,13 +20,12 @@ RUN sed -i '/^;extension=pgsql/s/^;//' /usr/local/etc/php/php.ini-development
 RUN sed -i '/^;extension=pdo_pgsql/s/^;//' /usr/local/etc/php/php.ini-production
 RUN sed -i '/^;extension=pgsql/s/^;//' /usr/local/etc/php/php.ini-production
 
-
-
 WORKDIR /var/www/html
 COPY . .
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
+RUN npm install
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
