@@ -35,13 +35,13 @@ class RefreshCommand extends Command
             return self::FAILURE;
         }
 
-        dump('deleting');
-
         $files = Storage::allFiles('/public/images/products');
         Storage::delete($files);
+
         $this->call('migrate:fresh', [
             '--seed' => true
         ]);
+
         return self::SUCCESS;
     }
 }
