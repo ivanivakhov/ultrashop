@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/login', [\App\Http\Controllers\HomeController::class, 'login'])->name('login');
+Route::controller(\App\Http\Controllers\AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::get('/sign-up', 'signUp')->name('signUp');
+
+});
+
+Route::get('/', HomeController::class)->name('home');
