@@ -15,7 +15,7 @@
             type="text"
             placeholder="Name"
             required
-            value="{{ old('email') }}"
+            value="{{ old('name') }}"
             :isError="$errors->has('name')"
         />
         @error('name')
@@ -45,7 +45,7 @@
         @enderror
 
         <x-forms.text-input
-            name="password_confirm"
+            name="password_confirmation"
             type="password"
             placeholder="Confirm password"
             required

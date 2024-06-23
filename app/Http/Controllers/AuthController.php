@@ -32,12 +32,12 @@ class AuthController extends Controller
 
         return redirect()->intended(route('home'));
     }
-    public function signUp(SignUpFormRequest $request): Response
+    public function signUp(): Response
     {
 
         return response()->view('auth.sign-up');
     }
-    public function store(SignUpFormRequest $request): Response
+    public function store(SignUpFormRequest $request)
     {
         $user = User::query()->create([
             'name' => $request->get('name'),
@@ -49,7 +49,7 @@ class AuthController extends Controller
 
         auth()->login($user);
 
-        return response()->view('home');
+        return redirect()->intended(route('home'));
     }
 
     public function logout()
