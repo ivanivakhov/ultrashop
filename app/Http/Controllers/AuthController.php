@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SignInFormRequest;
+use App\Http\Requests\SignUpFormRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -29,9 +32,23 @@ class AuthController extends Controller
 
         return redirect()->intended(route('home'));
     }
-    public function signUp(): Response
+    public function signUp(SignUpFormRequest $request): Response
     {
 
         return response()->view('auth.sign-up');
+    }
+    public function store(SignUpFormRequest $request): Response
+    {
+        $user = User::query()->create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+        ]);
+
+        event(new Registered($user));
+
+        auth()->login($user);
+
+        return response()->view('home');
     }
 }
