@@ -5,7 +5,8 @@
 @section('content')
     <x-forms.auth-forms
         title="Register"
-        action=""
+        action="{{ route('signUp') }}"
+        method="POST"
     >
         @csrf
 
@@ -14,6 +15,7 @@
             type="text"
             placeholder="Name"
             required
+            value="{{ old('email') }}"
             :isError="$errors->has('name')"
         />
         @error('name')

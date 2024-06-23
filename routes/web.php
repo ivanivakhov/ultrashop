@@ -16,6 +16,7 @@ use \App\Http\Controllers\HomeController;
 
 Route::controller(\App\Http\Controllers\AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'signIn')->name('signIn');
     Route::get('/sign-up', 'signUp')->name('signUp');
 
 });

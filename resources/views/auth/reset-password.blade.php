@@ -5,7 +5,8 @@
 @section('content')
     <x-forms.auth-forms
         title="Reset password"
-        action=""
+        action="{{ route('resetPassword') }}"
+        method="POST"
     >
         @csrf
 
@@ -14,6 +15,7 @@
             type="email"
             placeholder="E-mail"
             required
+            value="{{ old('email') }}"
             :isError="$errors->has('email')"
         />
         @error('email')
