@@ -21,6 +21,8 @@ Route::controller(\App\Http\Controllers\AuthController::class)->group(function (
     Route::get('/sign-up', 'signUp')->name('signUp');
     Route::post('/sign-up', 'store')->name('store');
 
+    Route::delete('logout', 'logout')->name('logout');
+
 });
 
 Route::get('/', HomeController::class)->name('home');
