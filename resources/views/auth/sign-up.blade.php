@@ -1,13 +1,24 @@
 @extends('layouts.auth')
 
-@section('title', 'Вход в аккаунт')
+@section('title', 'Register')
 
 @section('content')
     <x-forms.auth-forms
-        title="Вход в фіва"
+        title="Register"
         action=""
     >
         @csrf
+
+        <x-forms.text-input
+            name="name"
+            type="text"
+            placeholder="Name"
+            required
+            :isError="$errors->has('name')"
+        />
+        @error('name')
+        <x-forms.error> {{ $message }}</x-forms.error>
+        @enderror
 
         <x-forms.text-input
             name="email"
@@ -25,10 +36,25 @@
             type="password"
             placeholder="Password"
             required
+            :isError="$errors->has('password')"
         />
+        @error('password')
+        <x-forms.error> {{ $message }}</x-forms.error>
+        @enderror
+
+        <x-forms.text-input
+            name="password_confirm"
+            type="password"
+            placeholder="Confirm password"
+            required
+            :isError="$errors->has('password_confirm')"
+        />
+        @error('password_confirm')
+        <x-forms.error> {{ $message }}</x-forms.error>
+        @enderror
 
         <x-forms.primary-button>
-            Войти
+            Register
         </x-forms.primary-button>
 
 
@@ -49,8 +75,7 @@
 
         <x-slot:buttons>
             <div class="space-y-3 mt-5">
-                <div class="text-xxs md:text-xs"><a href="lost-password.html" class="text-white hover:text-white/70 font-bold">Забыли пароль?</a></div>
-                <div class="text-xxs md:text-xs"><a href="register.html" class="text-white hover:text-white/70 font-bold">Регистрация</a></div>
+                <div class="text-xxs md:text-xs"><a href="{{ route('login') }}" class="text-white hover:text-white/70 font-bold">Sign in</a></div>
             </div>
         </x-slot:buttons>
     </x-forms.auth-forms>
