@@ -5,9 +5,10 @@
 @section('content')
     <x-forms.auth-forms
         title="Reset password"
-        action="{{ route('resetPassword') }}"
+        action="{{ route('password.update', ['token' => $token]) }}"
         method="POST"
     >
+        @dump($errors)
         @csrf
 
         <x-forms.text-input
@@ -15,7 +16,7 @@
             type="email"
             placeholder="E-mail"
             required
-            value="{{ old('email') }}"
+            value="{{ request('email') }}"
             :isError="$errors->has('email')"
         />
         @error('email')
@@ -34,13 +35,13 @@
         @enderror
 
         <x-forms.text-input
-            name="password_confirm"
+            name="password_confirmation"
             type="password"
             placeholder="Confirm password"
             required
-            :isError="$errors->has('password_confirm')"
+            :isError="$errors->has('password_confirmation')"
         />
-        @error('password_confirm')
+        @error('password_confirmation')
         <x-forms.error> {{ $message }}</x-forms.error>
         @enderror
 
@@ -50,6 +51,7 @@
         </x-forms.primary-button>
 
 
+        <x-slot:socialAuth></x-slot:socialAuth>
         <x-slot:buttons>
         </x-slot:buttons>
 

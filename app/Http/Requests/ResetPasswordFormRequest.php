@@ -1,15 +1,15 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class {{ class }} extends FormRequest
+class ResetPasswordFormRequest extends FormRequest
 {
 
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -18,7 +18,9 @@ class {{ class }} extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ];
     }
 }
