@@ -7,7 +7,6 @@ services:
             - db
         ports:
             - '800:80'
-            - '5173:5173'
         volumes:
             - ./:/var/www/html
     db:
