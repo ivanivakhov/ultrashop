@@ -8,7 +8,12 @@
     <title>@yield('title', env('APP_NAME'))</title>
 
 </head>
-<body>
+<body class="antialiased">
 
+    @if($message = flash()->get())
+        <div class="{{ $message->class() }} p-5">
+            {{ $message->message() }}
+        </div>
+    @endif
 </body>
 </html>
