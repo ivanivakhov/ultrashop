@@ -16,10 +16,14 @@ use \App\Http\Controllers\HomeController;
 
 Route::controller(\App\Http\Controllers\AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
-    Route::post('/login', 'signIn')->name('signIn');
+    Route::post('/login', 'signIn')
+        ->middleware('throttle:auth')
+        ->name('signIn');
 
     Route::get('/sign-up', 'signUp')->name('signUp');
-    Route::post('/sign-up', 'store')->name('store');
+    Route::post('/sign-up', 'store')
+        ->middleware('throttle:auth')
+        ->name('store');
 
     Route::delete('logout', 'logout')->name('logout');
 
